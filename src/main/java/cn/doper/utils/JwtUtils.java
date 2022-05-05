@@ -111,9 +111,9 @@ public class JwtUtils {
      * @param token
      * @return
      */
-    private boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         Date expiredTime = getTokenExpiredTime(token);
-        return expiredTime.before(new Date());
+        return !expiredTime.after(new Date());
     }
 
     /**

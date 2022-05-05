@@ -10,7 +10,6 @@ import cn.doper.security.dto.LoginUser;
 import cn.doper.security.impl.UserDetailsImpl;
 import cn.doper.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 /**
@@ -37,7 +36,7 @@ public class UserLoginServiceImpl implements UserLoginService {
         String token = jwtUtils.generateToken(userDetails.getLoginUser());
         // 2. 消息存redis
         LoginUser loginUser = userDetails.getLoginUser();
-        String tokenKey = UserToken.TOKEN_PREFIX + loginUser.getId();
+        String tokenKey = UserToken.TOKEN_REDIS_PREFIX + loginUser.getId();
         redisService.set(tokenKey, loginUser);
         return CommonResult.success(token);
     }

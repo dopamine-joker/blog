@@ -1,6 +1,8 @@
 package cn.doper.security.impl;
 
+import cn.doper.mybatis.entity.Permission;
 import cn.doper.mybatis.entity.User;
+import cn.doper.mybatis.mapper.PermissionMapper;
 import cn.doper.mybatis.service.UserService;
 import cn.doper.security.utils.UserConvertor;
 import org.assertj.core.util.Lists;
@@ -19,6 +21,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PermissionMapper permissionMapper;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.getUserByUserName(username);
@@ -26,7 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("用户不存在");
         }
         // TODO: 权限查询
-        List<String> permissionList = Lists.newArrayList("test");
-        return new UserDetailsImpl(UserConvertor.toLoginUser(user), permissionList);
+        List<String> permissions = permissionMapper.findUserPermissions(user.getId());
+        return new UserDetailsImpl(UserConvertor.toLoginUser(user), permissions);
     }
 }

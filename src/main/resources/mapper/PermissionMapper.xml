@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.doper.mybatis.mapper.PermissionMapper">
+    <select id="findUserPermissions" resultType="String">
+        select value
+        from sys_permission
+        where id in (select permission_id
+                     from sys_role_permission_relate
+                     where role_id =
+                           (select role_id
+                            from sys_user_role_relate
+                            where user_id = 1 limit 1)
+            )
+    </select>
+</mapper>

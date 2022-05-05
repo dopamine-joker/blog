@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -24,6 +25,8 @@ public class MySpringApplicationTest {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Value("${jwt.tokenHeader}")
+    private String tokenHeader;
     @Test
     public void MyBatisTest() {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
@@ -54,6 +57,11 @@ public class MySpringApplicationTest {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Test
+    public void valueTest() {
+        System.out.println(tokenHeader);
     }
 
 }

@@ -1,5 +1,6 @@
 package cn.doper.controller;
 
+import cn.doper.common.CommonResult;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,13 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
 
     @PostMapping("/test")
-    @PreAuthorize("hasAuthority('test')")
-    public String testPost() {
-        return "testPost";
+    @PreAuthorize("hasAuthority('sys:hello:test')")
+    public CommonResult<?> testPost() {
+        return CommonResult.success("testPost");
     }
 
     @GetMapping("/test")
-    public String testGet() {
-        return "testGet";
+//    @PreAuthorize("hasAuthority('test')")
+    public CommonResult<?> testGet() {
+        return CommonResult.success("testGet");
     }
 }
