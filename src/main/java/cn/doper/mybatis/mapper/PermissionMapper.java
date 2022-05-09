@@ -9,5 +9,5 @@ import java.util.List;
 
 @Mapper
 public interface PermissionMapper extends BaseMapper<Permission> {
-    List<String> findUserPermissions(@Param("userId") Long userId);
+    List<Permission> findUserPermissions(@Param("userId") Long userId);
 }

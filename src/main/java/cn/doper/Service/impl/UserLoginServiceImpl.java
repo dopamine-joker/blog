@@ -1,9 +1,10 @@
 package cn.doper.Service.impl;
 
+import cn.doper.Service.UserCacheService;
 import cn.doper.Service.UserLoginService;
 import cn.doper.Service.UserSecurityService;
 import cn.doper.common.CommonResult;
-import cn.doper.constants.UserToken;
+import cn.doper.constants.RedisUserToken;
 import cn.doper.mybatis.entity.User;
 import cn.doper.redis.service.RedisService;
 import cn.doper.security.dto.LoginUser;
@@ -26,6 +27,9 @@ public class UserLoginServiceImpl implements UserLoginService {
     private RedisService redisService;
 
     @Autowired
+    private UserCacheService userCacheService;
+
+    @Autowired
     private JwtUtils jwtUtils;
 
     @Override
@@ -36,8 +40,8 @@ public class UserLoginServiceImpl implements UserLoginService {
         String token = jwtUtils.generateToken(userDetails.getLoginUser());
         // 2. 消息存redis
         LoginUser loginUser = userDetails.getLoginUser();
-        String tokenKey = UserToken.TOKEN_REDIS_PREFIX + loginUser.getId();
-        redisService.set(tokenKey, loginUser);
+        userCacheService.setLoginUser(loginUser);
+        // 3. 返回
         return CommonResult.success(token);
     }
 }

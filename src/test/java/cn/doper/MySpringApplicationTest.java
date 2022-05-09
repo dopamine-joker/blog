@@ -1,7 +1,10 @@
 package cn.doper;
 
+import cn.doper.mybatis.entity.Permission;
 import cn.doper.mybatis.entity.User;
 import cn.doper.mybatis.mapper.UserMapper;
+import cn.doper.redis.service.RedisService;
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,10 +13,15 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.Resource;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -21,9 +29,14 @@ public class MySpringApplicationTest {
 
     @Autowired
     private UserMapper userMapper;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private RedisService redisService;
+
+    @Resource(name = "stringJsonRedisTemplate")
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Value("${jwt.tokenHeader}")
     private String tokenHeader;
@@ -35,8 +48,6 @@ public class MySpringApplicationTest {
         System.out.println(user);
     }
 
-    //$2a$10$MsW95fjD8zbsFI1VOAqPaOapRW4wc91fCw6ipTvL8FR2T4Jv1v89u
-    //$2a$10$2q/mb/jqqleupBnjr1FRwe9PLBCEjec/IhShkS3wT2TYrUg4zDySC
     @Test
     public void encoder() {
         System.out.println(passwordEncoder.encode("123456"));
@@ -56,7 +67,6 @@ public class MySpringApplicationTest {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Test
@@ -64,6 +74,64 @@ public class MySpringApplicationTest {
         System.out.println(tokenHeader);
     }
 
+    @Test
+    public void testRedis() {
+//        Map<String, Object> hashMap = new HashMap<>();
+//        hashMap.put("key1", new DTO(1, "123", "213"));
+//        hashMap.put("key2", new Integer(123));
+//        redisService.set("test", hashMap, 64800);
+        Set<Permission> set = new HashSet<>();
+        set.add(new Permission());
+        redisService.set("set", set, 68400);
+    }
+
+
+    @Test
+    public void testLocalTime() {
+        TimeDTO timeDTO = new TimeDTO("123", LocalDate.now());
+        redisService.set("time", timeDTO, 68400);
+        TimeDTO time = redisService.get("time", TimeDTO.class);
+        System.out.println(time);
+    }
+
+}
+
+class TimeDTO {
+    private String username;
+
+    public LocalDate getLocalDate() {
+        return localDate;
+    }
+
+    public void setLocalDate(LocalDate localDate) {
+        this.localDate = localDate;
+    }
+
+    private LocalDate localDate;
+
+    public TimeDTO() {
+    }
+
+    public TimeDTO(String username, LocalDate localDate) {
+        this.username = username;
+        this.localDate = localDate;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return "TimeDTO{" +
+                "username='" + username + '\'' +
+                ", localDate=" + localDate +
+                '}';
+    }
 }
 
 class DTO implements Serializable {
@@ -97,5 +165,22 @@ class DTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "DTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

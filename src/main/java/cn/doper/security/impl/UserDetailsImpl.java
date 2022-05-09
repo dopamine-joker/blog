@@ -1,5 +1,6 @@
 package cn.doper.security.impl;
 
+import cn.doper.mybatis.entity.Permission;
 import cn.doper.security.dto.LoginUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,13 +16,13 @@ public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 907051613876467178L;
     private LoginUser loginUser;
 
-    private List<String> permissions;
+    private List<Permission> permissions;
 
     public UserDetailsImpl(LoginUser loginUser) {
         this.loginUser = loginUser;
     }
 
-    public UserDetailsImpl(LoginUser loginUser, List<String> permissions) {
+    public UserDetailsImpl(LoginUser loginUser, List<Permission> permissions) {
         this.loginUser = loginUser;
         this.permissions = permissions;
     }
@@ -29,8 +30,8 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return permissions.stream()
-                .filter(permission -> permission != null && !Objects.equals(permission, ""))
-                .map(SimpleGrantedAuthority::new)
+                .filter(permission -> permission != null && !Objects.equals(permission.getValue(), ""))
+                .map(permission -> new SimpleGrantedAuthority(permission.getValue()))
                 .collect(Collectors.toList());
     }
 

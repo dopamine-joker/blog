@@ -13,8 +13,16 @@ spring:
     database: 2
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
-  type-aliases-package: cn.doper.mybatis.mapper
+  type-aliases-package: cn.doper.mybatis.entity
 jwt:
   tokenHeader: Authorization #JWT存储的请求头
   secret: admin-secret #JWT加解密使用的密钥
-  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  expiration: 86400 #JWT的超期限时间(60*24*7)
+
+# 自定义redis信息
+redis:
+  key:
+    user-cache-prefix: userCache:info  #用户信息key前缀
+    permission-cache-prefix: permissionCache #用户权限前缀
+  expire:
+    common: 86400

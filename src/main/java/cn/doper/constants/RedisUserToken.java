@@ -1,5 +1,5 @@
 package cn.doper.constants;
 
-public interface UserToken {
+public interface RedisUserToken {
     String TOKEN_REDIS_PREFIX = "X-USER-TOKEN-";
 }
