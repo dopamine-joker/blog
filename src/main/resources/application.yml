@@ -11,6 +11,8 @@ spring:
     port: 6379
     password: doper
     database: 2
+    timeout: 2000ms
+
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   type-aliases-package: cn.doper.mybatis.entity
