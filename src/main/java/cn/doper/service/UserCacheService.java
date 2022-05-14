@@ -1,4 +1,4 @@
-package cn.doper.Service;
+package cn.doper.service;
 
 import cn.doper.mybatis.entity.Permission;
 import cn.doper.mybatis.entity.User;
@@ -16,7 +16,7 @@ public interface UserCacheService {
 
     void setLoginUser(LoginUser loginUser);
 
-    Boolean delLoginUser(String username);
+    boolean delLoginUser(String username);
 
     LoginUser getLoginUser(String username);
 

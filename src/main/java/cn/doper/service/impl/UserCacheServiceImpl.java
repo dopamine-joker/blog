@@ -1,6 +1,6 @@
-package cn.doper.Service.impl;
+package cn.doper.service.impl;
 
-import cn.doper.Service.UserCacheService;
+import cn.doper.service.UserCacheService;
 import cn.doper.mybatis.entity.Permission;
 import cn.doper.mybatis.entity.User;
 import cn.doper.redis.service.RedisService;
@@ -30,6 +30,9 @@ public class UserCacheServiceImpl implements UserCacheService {
     @Value("${redis.key.user-cache-prefix}")
     private String userCachePrefix;
 
+    @Value("${redis.key.user-cache-info}")
+    private String userInfoKey;
+
     @Value("${redis.key.permission-cache-prefix}")
     private String permissionCachePrefix;
 
@@ -48,20 +51,20 @@ public class UserCacheServiceImpl implements UserCacheService {
 
     @Override
     public void setLoginUser(LoginUser loginUser) {
-        String key = userCachePrefix + ":" + loginUser.getUserName();
+        String key = userCachePrefix + ":" + userInfoKey + ":" + loginUser.getUserName();
         redisService.set(key, loginUser, expiredTime);
     }
 
 
     @Override
-    public Boolean delLoginUser(String username) {
-        String key = userCachePrefix + ":" + username;
+    public boolean delLoginUser(String username) {
+        String key = userCachePrefix + ":" + userInfoKey + ":" + username;
         return redisService.del(key);
     }
 
     @Override
     public LoginUser getLoginUser(String username) {
-        String key = userCachePrefix + ":" + username;
+        String key = userCachePrefix + ":" + userInfoKey + ":" + username;
         return redisService.get(key, LoginUser.class);
     }
 

@@ -19,6 +19,7 @@
         <hutool-version>5.7.22</hutool-version>
         <fastjson-version>1.2.78</fastjson-version>
         <jjwt-version>0.9.0</jjwt-version>
+        <guava-version>30.1-jre</guava-version>
     </properties>
 
     <dependencies>
@@ -80,6 +81,14 @@
             <artifactId>jjwt</artifactId>
             <version>${jjwt-version}</version>
         </dependency>
+        <!--guava-->
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava-version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>

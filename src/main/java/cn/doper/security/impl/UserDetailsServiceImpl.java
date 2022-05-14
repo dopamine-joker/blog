@@ -1,6 +1,6 @@
 package cn.doper.security.impl;
 
-import cn.doper.Service.UserCacheService;
+import cn.doper.service.UserCacheService;
 import cn.doper.mybatis.entity.Permission;
 import cn.doper.mybatis.entity.User;
 import cn.doper.mybatis.service.PermissionService;
@@ -32,12 +32,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private LoginUser getLoginUser(String username) {
         LoginUser loginUser = userCacheService.getLoginUser(username);
-        if(!Objects.isNull(loginUser)) {
+        if (!Objects.isNull(loginUser)) {
             return loginUser;
         }
         // 这里若还是查不到用户，则loginUser还是为空
         User user = userService.getUserByUserName(username);
-        if(!Objects.isNull(user)) {
+        if (!Objects.isNull(user)) {
             loginUser = UserConvertor.toLoginUser(user);
             userCacheService.setLoginUser(loginUser);
         }

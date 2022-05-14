@@ -1,6 +1,6 @@
-package cn.doper.Service.impl;
+package cn.doper.service.impl;
 
-import cn.doper.Service.UserSecurityService;
+import cn.doper.service.UserSecurityService;
 import cn.doper.security.impl.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

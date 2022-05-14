@@ -39,8 +39,6 @@ import java.util.Objects;
 @Slf4j
 public class JwtUtils {
 
-    private final static String CLAIM_KEY_CREATED = "created";
-
     private final static String CLAIM_KEY_UID = "uid";
 
     @Value("${jwt.secret}")
@@ -66,7 +64,7 @@ public class JwtUtils {
     /**
      * 对外暴露的生成token接口
      *
-     * @param user
+     * @param user 登陆用户
      * @return
      */
     public String generateToken(LoginUser user) {

@@ -1,7 +1,6 @@
-package cn.doper.Service;
+package cn.doper.service;
 
 import cn.doper.security.impl.UserDetailsImpl;
-import org.springframework.security.core.userdetails.UserDetails;
 
 public interface UserSecurityService {
     UserDetailsImpl login(String username, String password);

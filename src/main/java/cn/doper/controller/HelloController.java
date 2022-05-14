@@ -1,6 +1,6 @@
 package cn.doper.controller;
 
-import cn.doper.common.CommonResult;
+import cn.doper.common.result.CommonResult;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

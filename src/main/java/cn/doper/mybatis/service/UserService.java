@@ -7,4 +7,6 @@ public interface UserService extends IService<User> {
     User getUserByUserName(String username);
 
     User getUserByPhone(String phone);
+
+    boolean registerUser(String username, String password, String phoneNumber, String email);
 }
