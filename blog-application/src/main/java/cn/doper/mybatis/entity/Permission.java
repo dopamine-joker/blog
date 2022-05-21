@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("sys_permission")
+@TableName("blog_permission")
 public class Permission implements Serializable {
     private static final long serialVersionUID = -5033378006775460084L;
     private Integer id;

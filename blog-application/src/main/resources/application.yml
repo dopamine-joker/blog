@@ -1,6 +1,8 @@
 server:
   port: 9999
 spring:
+  application:
+    name: blog-application
   datasource:
     url: jdbc:mysql://localhost:3306/MySpringSecurity?characterEncoding=utf-8
     username: root
@@ -14,6 +16,7 @@ spring:
     timeout: 2000ms
   kafka:
     producer:
+      client-id: ${spring.application.name}-producer
       bootstrap-servers: kafka1:9091,kafka2:9092,kafka3:9093
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -43,3 +46,8 @@ redis:
     permission-cache-prefix: permissionCache #用户权限前缀
   expire:
     common: 86400
+
+# 自定义kafka
+kafka:
+  topic:
+    user-login-log: user-login-log

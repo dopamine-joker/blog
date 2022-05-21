@@ -1,0 +1,29 @@
+server:
+  port: 9977
+spring:
+  application:
+    name: blog-kafka-consumer
+  datasource:
+    url: jdbc:mysql://localhost:3306/MySpringSecurity?characterEncoding=utf-8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  kafka:
+    consumer:
+      bootstrap-servers: kafka1:9091,kafka2:9092,kafka3:9093
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      enable-auto-commit: true
+      auto-commit-interval: 1000
+      max-poll-records: 5 #批量拉取
+
+    listener:
+      concurrency: 5
+      type: batch
+
+# 自定义kafka
+kafka:
+  topic:
+    userLoginTopic: user-login-log
+  group:
+    loginGroup: login-group

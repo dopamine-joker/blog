@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("sys_user")
+@TableName("blog_user")
 public class User implements Serializable {
     private static final long serialVersionUID = -2736344732810824749L;
 

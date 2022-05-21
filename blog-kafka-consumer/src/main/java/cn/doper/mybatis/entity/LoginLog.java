@@ -8,16 +8,15 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("blog_role")
-public class Role implements Serializable {
-
-    private static final long serialVersionUID = 1154450341295683983L;
-    private Integer id;
-    private String name;
-    private String description;
-    private Date createTime;
+@TableName("blog_login_log")
+public class LoginLog implements Serializable {
+    private static final long serialVersionUID = -3061069902251151271L;
+    private Long id;
+    private Long userId;
+    private String ip;
+    private Date loginTime;
+    private Integer type;
 }

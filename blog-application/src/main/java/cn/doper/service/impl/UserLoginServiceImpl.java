@@ -4,13 +4,17 @@ import cn.doper.common.result.CommonResult;
 import cn.doper.common.result.impl.ResultCode;
 import cn.doper.domain.UserRegisterDO;
 import cn.doper.exception.BusinessException;
+import cn.doper.mybatis.entity.LoginLog;
 import cn.doper.mybatis.entity.User;
 import cn.doper.mybatis.service.UserService;
+import cn.doper.security.dto.LoginUser;
 import cn.doper.security.impl.UserDetailsImpl;
 import cn.doper.service.UserCacheService;
 import cn.doper.service.UserLoginService;
 import cn.doper.service.UserSecurityService;
 import cn.doper.utils.JwtUtils;
+import cn.doper.utils.RequestUtil;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -18,6 +22,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * user顶层service
@@ -41,6 +50,9 @@ public class UserLoginServiceImpl implements UserLoginService {
     private UserService userService;
 
     @Autowired
+    private UserKafkaServiceImpl userKafkaService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -49,8 +61,24 @@ public class UserLoginServiceImpl implements UserLoginService {
         // TODO: 处理认证后的用户信息
         // 1. 生成token
         String token = jwtUtils.generateToken(userDetails.getLoginUser());
-        // 2. 返回
+        // 2. kafka日志
+        insertLog(userDetails.getLoginUser());
+        // 3. 返回
         return CommonResult.response(ResultCode.USER_OK, token);
+    }
+
+    private void insertLog(LoginUser user) {
+        if (user.getId() == null) {
+            return ;
+        }
+        LoginLog loginLog = new LoginLog();
+        loginLog.setUserId(user.getId());
+        Date now = new Date();
+        loginLog.setLoginTime(now);
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = requestAttributes.getRequest();
+        loginLog.setIp(RequestUtil.getRequestIp(request));
+        userKafkaService.insertLoginLog(loginLog);
     }
 
     @Override
