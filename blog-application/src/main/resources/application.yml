@@ -3,6 +3,9 @@ server:
 spring:
   application:
     name: blog-application
+  elasticsearch:
+    rest:
+      uris: localhost:9200
   datasource:
     url: jdbc:mysql://localhost:3306/MySpringSecurity?characterEncoding=utf-8
     username: root
@@ -27,6 +30,11 @@ spring:
       properties:
         linger:
           ms: 5
+secure:
+  ignore:
+    urls:
+      - /user/login
+      - /user/register
 
 
 mybatis-plus:
