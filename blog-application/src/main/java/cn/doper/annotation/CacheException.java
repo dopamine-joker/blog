@@ -3,7 +3,8 @@ package cn.doper.annotation;
 import java.lang.annotation.*;
 
 /**
- * 给某些缓存无关精要的方法添加，用来忽略这些方法的缓存异常
+ * Service中缓存默认不影响
+ * 给缓存会影响的方法添加，当缓存出错时会抛出异常
  */
 @Documented
 @Target(ElementType.METHOD)

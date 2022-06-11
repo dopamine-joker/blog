@@ -1,5 +1,6 @@
 package cn.doper.service.impl;
 
+import cn.doper.annotation.CacheException;
 import cn.doper.mybatis.entity.Permission;
 import cn.doper.mybatis.entity.User;
 import cn.doper.redis.service.RedisService;
@@ -49,6 +50,7 @@ public class UserCacheServiceImpl implements UserCacheService {
 
     }
 
+    @CacheException
     @Override
     public void setLoginUser(LoginUser loginUser) {
         String key = userCachePrefix + ":" + userInfoKey + ":" + loginUser.getUserName();
@@ -56,6 +58,7 @@ public class UserCacheServiceImpl implements UserCacheService {
     }
 
 
+    @CacheException
     @Override
     public boolean delLoginUser(String username) {
         String key = userCachePrefix + ":" + userInfoKey + ":" + username;

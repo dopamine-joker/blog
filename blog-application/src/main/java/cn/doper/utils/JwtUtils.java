@@ -81,16 +81,12 @@ public class JwtUtils {
      * @param token
      * @return
      */
-    private Claims getClaimsFromToken(String token) {
+    private Claims getClaimsFromToken(String token) throws Exception {
         Claims claims = null;
-        try {
-            claims = Jwts.parser()
-                    .setSigningKey(secret)
-                    .parseClaimsJws(token)
-                    .getBody();
-        } catch (Exception e) {
-            log.error("JWT从token获取claims失败:{}", token);
-        }
+        claims = Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody();
         return claims;
     }
 
@@ -104,13 +100,19 @@ public class JwtUtils {
     }
 
     /**
-     * 判断token是否过期
+     * 判断token是否过期,
      *
      * @param token
-     * @return
+     * @return true过期，false不过期
      */
     public boolean isTokenExpired(String token) {
-        Date expiredTime = getTokenExpiredTime(token);
+        Date expiredTime = null;
+        try {
+            expiredTime = getTokenExpiredTime(token);
+        } catch (Exception e) {
+            log.error("token 异常{}", e.getMessage());
+            return true;
+        }
         return !expiredTime.after(new Date());
     }
 
@@ -120,7 +122,7 @@ public class JwtUtils {
      * @param token
      * @return
      */
-    private Date getTokenExpiredTime(String token) {
+    private Date getTokenExpiredTime(String token) throws Exception {
         Claims claims = getClaimsFromToken(token);
         return claims.getExpiration();
     }
@@ -145,10 +147,11 @@ public class JwtUtils {
 
     /**
      * 从token中提取uid
+     *
      * @param token
      * @return
      */
-    public long getUserIdFromToken(String token) {
+    public long getUserIdFromToken(String token) throws Exception {
         Claims claims = getClaimsFromToken(token);
         Long uid = claims.get(CLAIM_KEY_UID, Long.class);
         if (Objects.isNull(uid)) {

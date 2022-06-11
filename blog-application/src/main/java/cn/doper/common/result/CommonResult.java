@@ -52,7 +52,7 @@ public class CommonResult<T> {
      * @param <T>
      */
     public static<T> CommonResult<T> success(T data) {
-        return new CommonResult<T>(ResultCode.COMMON_OK.getCode(), ResultCode.COMMON_OK.getMessage(), data);
+        return response(ResultCode.COMMON_OK, data);
     }
 
     /**
@@ -63,7 +63,7 @@ public class CommonResult<T> {
      * @param <T>
      */
     public static<T> CommonResult<T> success(T data, String message) {
-        return new CommonResult<T>(ResultCode.COMMON_OK.getCode(), message, data);
+        return response(ResultCode.COMMON_OK, message, data);
     }
 
     /**
@@ -73,7 +73,7 @@ public class CommonResult<T> {
      * @param <T>
      */
     public static<T> CommonResult<T> failed(T data) {
-        return new CommonResult<T>(ResultCode.COMMON_FAILED.getCode(), ResultCode.COMMON_FAILED.getMessage(), data);
+        return response(ResultCode.COMMON_FAILED, data);
     }
 
     /**
@@ -84,7 +84,7 @@ public class CommonResult<T> {
      * @param <T>
      */
     public static<T> CommonResult<T> failed(T data, String message) {
-        return new CommonResult<T>(ResultCode.COMMON_FAILED.getCode(), message, data);
+        return response(ResultCode.COMMON_FAILED, message, data);
     }
 
     /**
@@ -109,7 +109,7 @@ public class CommonResult<T> {
      * @param <T>
      */
     public static <T> CommonResult<T> forbidden(T data) {
-        return new CommonResult<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
+        return response(ResultCode.FORBIDDEN, data);
     }
 
     /**
@@ -119,7 +119,7 @@ public class CommonResult<T> {
      * @param <T>
      */
     public static <T> CommonResult<T> unauthorized(T data) {
-        return new CommonResult<T>(ResultCode.UNAUTHORIZED.getCode(), ResultCode.UNAUTHORIZED.getMessage(), data);
+        return response(ResultCode.UNAUTHORIZED, data);
     }
 
 

@@ -40,6 +40,8 @@ secure:
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   type-aliases-package: cn.doper.mybatis.entity
+  configuration:
+    map-underscore-to-camel-case: true
 jwt:
   tokenHeader: Authorization #JWT存储的请求头
   secret: admin-secret #JWT加解密使用的密钥

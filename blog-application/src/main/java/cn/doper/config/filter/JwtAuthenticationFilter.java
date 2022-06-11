@@ -3,6 +3,7 @@ package cn.doper.config.filter;
 import cn.doper.security.dto.LoginUser;
 import cn.doper.service.UserCacheService;
 import cn.doper.utils.JwtUtils;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,7 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // 2. 判断用户是否登陆
         String username = jwtUtils.getUserNameFromToken(token);
         LoginUser loginUser = userCacheService.getLoginUser(username);
-        if (loginUser == null) {
+        if (loginUser == null) {    //两种情况，redis宕机或未登陆
             // 放行，后续security根据配置和context检测
             filterChain.doFilter(request, response);
             return;

@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("blog_role")
+@TableName("b_role")
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 1154450341295683983L;
