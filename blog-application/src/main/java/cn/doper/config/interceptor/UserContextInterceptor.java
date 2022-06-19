@@ -13,6 +13,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 @Component
 public class UserContextInterceptor implements HandlerInterceptor {
@@ -20,6 +21,15 @@ public class UserContextInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        return Optional
+//                .ofNullable(authentication)
+//                .map(a -> {
+//                    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+//                    LoginUser loginUser = userDetails.getLoginUser();
+//                    UserContextHolder.set(loginUser.getId(), loginUser.getUserName());
+//                    return true;
+//                })
+//                .orElseThrow(() -> new BusinessException(ResultCode.UNAUTHORIZED));
         if(authentication == null) {
             throw new BusinessException(ResultCode.UNAUTHORIZED);
         }

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.doper.mybatis.mapper.BlogMapper">
+
+    <resultMap id="userBlog" type="UserBlog">
+        <id property="id" column="blog_id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="cover" column="cover"/>
+        <result property="viewCount" column="view_count"/>
+        <result property="createTime" column="blog_create_time"/>
+        <result property="publishTime" column="blog_publish_time"/>
+        <result property="updateTime" column="blog_update_time"/>
+        <result property="top" column="is_top"/>
+        <result property="status" column="status"/>
+        <association property="user" javaType="UserInfo">
+            <id property="id" column="user_id"/>
+            <result property="userName" column="user_name"/>
+            <result property="nickName" column="nick_name"/>
+            <result property="email" column="email"/>
+            <result property="phoneNumber" column="phone_number"/>
+            <result property="sex" column="sex"/>
+            <result property="avatar" column="avatar"/>
+            <result property="userType" column="user_type"/>
+        </association>
+        <collection property="tags" javaType="ArrayList" ofType="Tag">
+            <id property="id" column="tag_id"/>
+            <result property="blogId" column="blog_id"/>
+            <result property="tag" column="tag"/>
+            <result property="createTime" column="tag_create_time"/>
+            <result property="updateTime" column="tag_update_time"/>
+        </collection>
+
+    </resultMap>
+
+    <select id="findUserBlogs" resultMap="userBlog">
+        select bu.id           as user_id,
+               bu.user_name,
+               bu.nick_name,
+               bu.email,
+               bu.phone_number,
+               bu.sex,
+               bu.avatar,
+               bu.user_type,
+               bb.id           as blog_id,
+               bb.title,
+               bb.content,
+               bb.cover,
+               bb.view_count,
+               bb.create_time  as blog_create_time,
+               bb.publish_time as blog_publish_time,
+               bb.update_time  as blog_update_time,
+               bb.is_top,
+               bb.status,
+               bt.id           as tag_id,
+               bt.tag          as tag,
+               bt.create_time  as tag_create_time,
+               bt.update_time  as tag_update_time
+        from b_blog bb
+                 left join b_user bu on bb.user_id = bu.id
+                 left join b_tag bt on bb.id = bt.blog_id
+        where bu.id = #{userId};
+
+    </select>
+
+    <select id="findUserBlogsPage" resultMap="userBlog">
+        select bu.id          as user_id,
+               bu.user_name,
+               bu.nick_name,
+               bu.email,
+               bu.phone_number,
+               bu.sex,
+               bu.avatar,
+               bu.user_type,
+               bb.*,
+               bt.id          as tag_id,
+               bt.tag         as tag,
+               bt.create_time as tag_create_time,
+               bt.update_time as tag_update_time
+        from (select bb_t1.id           as blog_id,
+                     bb_t1.user_id,
+                     bb_t1.title,
+                     bb_t1.content,
+                     bb_t1.cover,
+                     bb_t1.view_count,
+                     bb_t1.create_time  as blog_create_time,
+                     bb_t1.publish_time as blog_publish_time,
+                     bb_t1.update_time  as blog_update_time,
+                     bb_t1.is_top,
+                     bb_t1.status
+              from b_blog bb_t1
+                       join (select id from b_blog where user_id = #{userId} limit #{start},#{size}) bb_t2
+                            on bb_t1.id = bb_t2.id) bb
+                 left join b_user bu on bb.user_id = bu.id
+                 left join b_tag bt on bb.blog_id = bt.blog_id
+        order by bb.blog_publish_time DESC;
+    </select>
+</mapper>

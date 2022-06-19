@@ -62,7 +62,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return loginUser.getStatus().equals(0);
+        return Objects.equals(loginUser.getStatus(), 0);
     }
 
     public LoginUser getLoginUser() {

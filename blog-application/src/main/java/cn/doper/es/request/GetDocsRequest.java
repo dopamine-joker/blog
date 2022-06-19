@@ -9,6 +9,46 @@ import org.elasticsearch.common.lucene.search.function.FunctionScoreQuery;
 import java.util.ArrayList;
 import java.util.List;
 
+ /**
+ * Request构建使用示例
+ * <pre>{@code
+ * public GetDocsRequest<?> hotelSearchRequest(HotelListDO hotelListDO) {
+ *     PageResult<HotelDoc> result;
+ *     // query构造
+ *     RequestQueryParams queryParams = ParamsBuilders.requestQueryParams();
+ *     queryParams.addMust(ParamsBuilders.matchQueryParams("all", hotelListDO.getKey()));
+ *     // filter 构造
+ *     RequestFilterParams filterParams = ParamsBuilders.requestFilterParams();
+ *     if (StringUtils.hasText(hotelListDO.getCity())) {
+ *         filterParams.add(ParamsBuilders.termQueryParams("city", hotelListDO.getCity()));
+ *     }
+ *     if (StringUtils.hasText(hotelListDO.getBrand())) {
+ *         filterParams.add(ParamsBuilders.termQueryParams("brand", hotelListDO.getBrand()));
+ *     }
+ *     if (StringUtils.hasText(hotelListDO.getStarName())) {
+ *         filterParams.add(ParamsBuilders.termQueryParams("starName", hotelListDO.getStarName()));
+ *     }
+ *     Integer minPrice = hotelListDO.getMinPrice();
+ *     Integer maxPrice = hotelListDO.getMaxPrice();
+ *     RangeQueryParams rangeQueryParams = ParamsBuilders.rangeQueryParams("price");
+ *     rangeQueryParams.from(minPrice).to(maxPrice);
+ *     filterParams.add(rangeQueryParams)
+ *     // must字段构造，filter条件添加
+ *     GetDocsRequest<HotelDoc> request = RequestBuilders.getDocsRequest("hotel", HotelDoc.class)
+ *             .query(queryParams)
+ *             .filter(filterParams)
+ *             .pageSize(hotelListDO.getPage(), hotelListDO.getSize())
+ *             .sortBy(hotelListDO.getSortBy())
+ *             .functionScore(ParamsBuilders.functionScoreParams(
+ *                     ParamsBuilders.termQueryParams("isAD", true),
+ *                     ScoreFunctionBuilders.weightFactorFunction(10)
+ *             ))
+ *             .scoreMode(FunctionScoreQuery.ScoreMode.MULTIPLY);
+ *     // 发送请求
+ *     return request;
+ * }
+ * }</pre>
+ */
 @Getter
 public class GetDocsRequest<T> {
 
@@ -73,7 +113,6 @@ public class GetDocsRequest<T> {
         this.sortBy = sortBy;
         return this;
     }
-
 
 
     public GetDocsRequest<T> functionScore(FunctionScoreParams functionScoreParams) {

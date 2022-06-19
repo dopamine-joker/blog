@@ -3,13 +3,13 @@
 <mapper namespace="cn.doper.mybatis.mapper.PermissionMapper">
     <select id="findUserPermissions" resultType="Permission">
         select *
-        from blog_permission
+        from b_permission
         where id in (select permission_id
-                     from blog_role_permission_relate
+                     from b_role_permission_relate
                      where role_id =
                            (select role_id
-                            from blog_user_role_relate
-                            where user_id = 1 limit 1)
+                            from b_user_role_relate
+                            where user_id = #{userId} limit 1)
             )
     </select>
 </mapper>

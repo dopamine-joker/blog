@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("blog_login_log")
+@TableName("b_login_log")
 public class LoginLog implements Serializable {
     private static final long serialVersionUID = -3061069902251151271L;
     private Long id;

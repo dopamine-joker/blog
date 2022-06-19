@@ -56,7 +56,7 @@ public class ESServiceImpl implements EsService {
         try {
             DeleteRequest request = new DeleteRequest(deleteDocRequest.getId(), deleteDocRequest.getId());
             DeleteResponse response = client.delete(request, RequestOptions.DEFAULT);
-            return response.getResult().equals(DocWriteResponse.Result.DELETED);
+            return Objects.equals(response.getResult(), DocWriteResponse.Result.DELETED);
         } catch (IOException e) {
             log.error("delete doc io exception:{}", e.getCause().getMessage());
         } catch (ElasticsearchStatusException e) {
@@ -101,7 +101,7 @@ public class ESServiceImpl implements EsService {
             IndexRequest request = new IndexRequest(index).id(id).create(true);
             request.source(objectMapper.writeValueAsString(doc), XContentType.JSON);
             IndexResponse response = client.index(request, RequestOptions.DEFAULT);
-            return response.getResult().equals(DocWriteResponse.Result.CREATED);
+            return Objects.equals(response.getResult(), DocWriteResponse.Result.CREATED);
         } catch (IOException e) {
             log.error("bulk io exception:{}", e.getCause().getMessage());
         } catch (ElasticsearchStatusException e) {
@@ -110,6 +110,9 @@ public class ESServiceImpl implements EsService {
         return false;
     }
 
+    /**
+     * TODO: 构造缓存
+     */
     @Override
     public <T> PageResult<T> getDocs(GetDocsRequest<T> getDocsRequest) {
         // 1. 构造请求

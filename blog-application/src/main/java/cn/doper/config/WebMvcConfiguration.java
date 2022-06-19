@@ -2,6 +2,7 @@ package cn.doper.config;
 
 import cn.doper.Properties.IgnoreUrlsProperties;
 import cn.doper.Properties.PropertiesConfig;
+import cn.doper.config.converter.BlogStatusConverter;
 import cn.doper.config.interceptor.UserContextInterceptor;
 import cn.doper.config.resolvers.LoginUserResolvers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -31,6 +33,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Autowired
     private IgnoreUrlsProperties ignoreUrlsProperties;
 
+    @Autowired
+    private BlogStatusConverter blogStatusConverter;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -42,6 +46,11 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(loginUserResolvers);
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(blogStatusConverter);
     }
 
     /**

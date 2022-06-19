@@ -49,7 +49,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (!Objects.isNull(permissions)) {
             return permissions;
         }
-        permissions = permissionService.getPermissions(userId);
+        permissions = permissionService.listPermissions(userId);
         if (!Objects.isNull(permissions)) {
             userCacheService.setUserPermissions(userId, permissions);
         }

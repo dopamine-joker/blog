@@ -5,7 +5,8 @@ import cn.doper.common.result.api.IModuleCode;
 public enum ModuleCode implements IModuleCode {
 
     COMMON("000", "通用模块"),
-    USER("001", "用户模块")
+    USER("001", "用户模块"),
+    BLOG("002", "博客模块")
     ;
 
     private final String moduleCode;

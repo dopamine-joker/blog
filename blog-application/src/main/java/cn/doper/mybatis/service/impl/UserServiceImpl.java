@@ -18,29 +18,35 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public User getUserByUserName(String username) {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getUserName, username);
-        return this.baseMapper.selectOne(queryWrapper);
+        return this.getOne(queryWrapper);
     }
 
     @Override
     public User getUserByPhone(String phone) {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getPhoneNumber, phone);
-        return this.baseMapper.selectOne(queryWrapper);
+        return this.getOne(queryWrapper);
     }
 
     @Override
-    public boolean registerUser(String username, String password, String phoneNumber, String email) {
+    public User getUserById(Long userId) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getId, userId);
+        return this.getOne(queryWrapper);
+    }
+
+    @Override
+    public boolean insertUser(String username, String password, String phoneNumber, String email) {
         User insertUser = new User();
         insertUser.setUserName(username);
         insertUser.setPassword(password);
         insertUser.setPhoneNumber(phoneNumber);
         insertUser.setEmail(email);
         insertUser.setStatus(0);
-        Date now = new Date();
-        insertUser.setCreateTime(now);
-        insertUser.setUpdateTime(now);
+        insertUser.setCreateTime(new Date());
+        insertUser.setUpdateTime(new Date());
         insertUser.setDelFlag(0);
-        return this.baseMapper.insert(insertUser) > 0;
+        return this.save(insertUser);
     }
 
 

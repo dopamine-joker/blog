@@ -14,7 +14,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.util.ArrayList;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -22,29 +26,28 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private SecurityAccessDeniedHandler accessDeniedHandler;
+    private AuthenticationEntryPoint authenticationEntryPoint;
 
     @Autowired
-    private SecurityAuthenticationEntryPoint authenticationEntryPoint;
+    private AccessDeniedHandler accessDeniedHandler;
 
     @Autowired
     private IgnoreUrlsProperties ignoreUrlsProperties;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        for (String url : ignoreUrlsProperties.getUrls()) {
-            http.antMatcher(url).anonymous();
-        }
+
+
         http
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy((SessionCreationPolicy.STATELESS))
                 .and()
                 .authorizeRequests()
+                .antMatchers(ignoreUrlsProperties.getUrls().toArray(new String[0])).anonymous()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-        //添加自定义未授权和未登录结果返回
-        http.exceptionHandling()
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling()            //添加自定义未授权和未登录结果返回
                 .accessDeniedHandler(accessDeniedHandler)
                 .authenticationEntryPoint(authenticationEntryPoint);
     }

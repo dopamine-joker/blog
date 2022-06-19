@@ -5,5 +5,5 @@ import cn.doper.mybatis.entity.Permission;
 import java.util.List;
 
 public interface PermissionService {
-    List<Permission> getPermissions(Long userId);
+    List<Permission> listPermissions(Long userId);
 }

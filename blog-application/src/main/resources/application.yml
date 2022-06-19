@@ -35,13 +35,15 @@ secure:
     urls:
       - /user/login
       - /user/register
+      - /error
 
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
-  type-aliases-package: cn.doper.mybatis.entity
+  type-aliases-package: cn.doper.mybatis.entity,;cn.doper.mybatis.dto
   configuration:
     map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 jwt:
   tokenHeader: Authorization #JWT存储的请求头
   secret: admin-secret #JWT加解密使用的密钥

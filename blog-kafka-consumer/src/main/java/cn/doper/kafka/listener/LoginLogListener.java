@@ -45,7 +45,7 @@ public class LoginLogListener {
             if (headers.iterator().hasNext()) {
                 type = new String(headers.iterator().next().value(), StandardCharsets.UTF_8);
             }
-            if (Objects.isNull(type) || type.equals("")) {
+            if (Objects.isNull(type) || Objects.equals(type, "")) {
                 log.error("login log msg type null, topic:{}, msg:{}", record.topic(), record.value());
                 return;
             }

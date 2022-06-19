@@ -14,7 +14,6 @@ import cn.doper.service.UserLoginService;
 import cn.doper.service.UserSecurityService;
 import cn.doper.utils.JwtUtils;
 import cn.doper.utils.RequestUtil;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -105,7 +104,7 @@ public class UserLoginServiceImpl implements UserLoginService {
         if(userService.getUserByUserName(user.getUserName()) != null) {
             throw new BusinessException(ResultCode.USER_NAME_DUPLICATE);
         }
-        if (!userService.registerUser(username, password, phoneNumber, email)) {
+        if (!userService.insertUser(username, password, phoneNumber, email)) {
             throw new BusinessException(ResultCode.USER_FAILED);
         }
         return CommonResult.response(ResultCode.USER_OK, null);
