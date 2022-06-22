@@ -1,8 +1,10 @@
 package cn.doper.controller;
 
 import cn.doper.annotation.LoginUser;
+import cn.doper.annotation.RateLimiter;
 import cn.doper.common.context.UserContext;
 import cn.doper.common.result.CommonResult;
+import cn.doper.constant.LimitType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +30,7 @@ public class HelloController {
     }
 
     @PostMapping("/info")
+    @RateLimiter(time = 5, count = 3, limitType = LimitType.IP)
     public CommonResult<?> testInfo(@LoginUser UserContext userContext) {
         return CommonResult.success(userContext);
     }

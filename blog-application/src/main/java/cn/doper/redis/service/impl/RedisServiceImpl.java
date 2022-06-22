@@ -22,10 +22,11 @@ public class RedisServiceImpl implements RedisService {
 
     /**
      * 获取非Collection类型的redis数据
+     *
      * @param key
      * @param targetClass
-     * @return
      * @param <T>
+     * @return
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -33,7 +34,7 @@ public class RedisServiceImpl implements RedisService {
         Object val = redisTemplate.opsForValue().get(key);
         if (targetClass == String.class) {
             return (T) StrUtil.toStringOrNull(val);
-        } else if(!Objects.isNull(val) && targetClass == val.getClass()) {
+        } else if (!Objects.isNull(val) && targetClass == val.getClass()) {
             return (T) val;
         }
         return BeanUtil.toBean(val, targetClass);
@@ -41,11 +42,14 @@ public class RedisServiceImpl implements RedisService {
 
     /**
      * 得到存入redis中的{@link List}(这里不是redis中的list)以list的形式取出来
+     *
      * @param key
-     * @return
+     * @param elementClass
      * @param <E>
+     * @return
      */
     @Override
+    @Deprecated
     public <E> List<E> getList(String key, Class<E> elementClass) {
         Object o = redisTemplate.opsForValue().get(key);    //因为redis config,这里获取的json会自动转化为arraylist
         return BeanUtil.copyToList((Collection<?>) o, elementClass);

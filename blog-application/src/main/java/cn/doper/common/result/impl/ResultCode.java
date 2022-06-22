@@ -16,6 +16,8 @@ public enum ResultCode implements IResultCode {
     UNAUTHORIZED(ModuleCode.COMMON, "401", "token is invalid or expired or has no access"),
 
     FORBIDDEN(ModuleCode.COMMON, "403", "authority forbidden"),
+
+    ACCESS_LIMIT(ModuleCode.COMMON, "403", "Frequently visited, please try again later"),
     /**
      * 用户模块
      */
