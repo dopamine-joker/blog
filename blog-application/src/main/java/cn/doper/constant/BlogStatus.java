@@ -1,9 +1,6 @@
 package cn.doper.constant;
 
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public enum BlogStatus {
@@ -18,7 +15,7 @@ public enum BlogStatus {
     static {
         statusCodeSet = Arrays.stream(BlogStatus.values())
                 .map(BlogStatus::getStatus)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toCollection(HashSet::new));
     }
 
     public static boolean containCode(int code) {
