@@ -7,6 +7,16 @@
       <option name="url" value="https://repo.maven.apache.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="TencentPrivate" />
+      <option name="name" value="TencentPrivate" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/tencent_public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="trpc_dev" />
+      <option name="name" value="trpc_dev" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/trpc_dev" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Maven Central repository" />
       <option name="url" value="https://repo1.maven.org/maven2" />
@@ -15,6 +25,16 @@
       <option name="id" value="jboss.community" />
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="TencentPrivateSnapshots" />
+      <option name="name" value="TencentPrivateSnapshots" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/tencent_public_snapshots/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="central" />
+      <option name="url" value="https://mirrors.tencent.com/nexus/repository/maven-public/" />
     </remote-repository>
   </component>
 </project>

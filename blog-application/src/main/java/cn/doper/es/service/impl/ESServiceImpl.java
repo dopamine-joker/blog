@@ -54,7 +54,7 @@ public class ESServiceImpl implements EsService {
     @Override
     public Boolean deleteDoc(DeleteDocRequest deleteDocRequest) {
         try {
-            DeleteRequest request = new DeleteRequest(deleteDocRequest.getId(), deleteDocRequest.getId());
+            DeleteRequest request = new DeleteRequest(deleteDocRequest.getIndex(), deleteDocRequest.getId());
             DeleteResponse response = client.delete(request, RequestOptions.DEFAULT);
             return Objects.equals(response.getResult(), DocWriteResponse.Result.DELETED);
         } catch (IOException e) {
