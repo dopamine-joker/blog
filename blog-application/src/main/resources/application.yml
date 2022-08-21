@@ -7,7 +7,7 @@ spring:
     rest:
       uris: localhost:9200
   datasource:
-    url: jdbc:mysql://localhost:3306/MySpringSecurity?characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/Blog?characterEncoding=utf-8
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver

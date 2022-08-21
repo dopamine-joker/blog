@@ -65,6 +65,14 @@
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+        <!--log-->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>

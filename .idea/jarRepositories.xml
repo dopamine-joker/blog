@@ -2,9 +2,29 @@
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
+      <option name="id" value="maven-tencent-thirdparty-snapshots" />
+      <option name="name" value="maven-tencent-thirdparty-snapshots" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/thirdparty-snapshots/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Central Repository" />
       <option name="url" value="https://repo.maven.apache.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven-tencent-thirdparty" />
+      <option name="name" value="maven-tencent-thirdparty" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/thirdparty/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven-tencent-public" />
+      <option name="name" value="maven-tencent-public" />
+      <option name="url" value="https://mirrors.tencent.com/nexus/repository/maven-public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven-tencent-private" />
+      <option name="name" value="maven-tencent-private" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/tencent_public/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="central" />
@@ -12,9 +32,29 @@
       <option name="url" value="https://repo1.maven.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="maven-tencent-tabsdk" />
+      <option name="name" value="maven-tencent-tabsdk" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/TABSDK/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="jboss.community" />
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven-tencent-tsf" />
+      <option name="name" value="maven-tencent-tsf" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/tsf/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="https://mirrors.tencent.com/nexus/repository/maven-public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven-tencent-private-snapshots" />
+      <option name="name" value="maven-tencent-private-snapshots" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/tencent_public_snapshots/" />
     </remote-repository>
   </component>
 </project>
