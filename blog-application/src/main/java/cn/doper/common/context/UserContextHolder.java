@@ -10,7 +10,7 @@ public class UserContextHolder {
         return LOCAL.get() == null ? EMPTY_CONTEXT : LOCAL.get();
     }
 
-    public synchronized static UserContext set(Long id, String userName) {
+    public static UserContext set(Long id, String userName) {
         UserContext userContext = new UserContext(id, userName);
         LOCAL.set(userContext);
         return userContext;
